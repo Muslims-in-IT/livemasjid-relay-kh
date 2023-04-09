@@ -12,6 +12,11 @@ RUN addgroup icecast && \
     make install && \
     apk del autoconf make build-base curl-dev libtheora-dev libvorbis-dev libogg-dev libxslt-dev libxml2-dev speex-dev && \
     rm -rf /tmp/icecast-kh
+
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 8000
 USER icecast
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["icecast", "-c", "/etc/icecast.xml"]
